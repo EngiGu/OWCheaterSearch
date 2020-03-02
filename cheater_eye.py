@@ -80,12 +80,12 @@ class CheaterEye:
                 url = url.replace('&amp;', '&')
                 if 'bbs.ow.blizzard.cn' not in url:
                     url = 'http://bbs.ow.blizzard.cn/%s' % url
-                print(url, title)
+                # print(url, title)
                 return_new_urls.append(url)
 
                 url_obj = SQLMODEL.get_one_url(url)
                 if url_obj and url_obj.status == UrlStatus.execed:
-                    self.logger.info('url has crwaled, url: %s', url)
+                    self.logger.info('url has crwaled, title: %s', title)
                 else:
                     detail_page = self.send_request(url)
                     pub_time, names = self.extract_detail_names(detail_page, title)
