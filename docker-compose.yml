@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  ow-cheater-eye:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    # image: "imagebed-server"
+    # container_name: "imagebed-server"
+    volumes:
+      - ./:/app
+  
