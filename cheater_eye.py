@@ -59,7 +59,7 @@ class CheaterEye:
             url_obj = SQLMODEL.add_one_url(url, title)
             for _name_ in names:
                 name, b_id = _name_.split('#')
-                SQLMODEL.add_one_cheater(name, b_id, url_obj.id)
+                SQLMODEL.add_one_cheater(name, b_id, url_obj.id, pub_time)
                 self.logger.info('added %s#%s \t\t pub_time: %s', name, b_id, pub_time)
             
             # 更改状态，不会再次爬取这个网址

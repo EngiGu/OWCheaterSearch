@@ -22,11 +22,11 @@ class SQLiteModel:
             s.add(url_obj)
             return url_obj
 
-    def add_one_cheater(self, name, b_id, u_id):
+    def add_one_cheater(self, name, b_id, u_id, pub_time):
         with session_scope() as s:
             ch_ex = self.get_one_cheater(name, b_id)
             if not ch_ex:
-                ch = Cheaters(name=name, b_id=b_id, u_id=u_id,  created=Utils.now(return_datetime=False))
+                ch = Cheaters(name=name, b_id=b_id, u_id=u_id, created=Utils.now(return_datetime=False), pub_time=pub_time)
                 s.add(ch)
                 return ch
             return ch_ex

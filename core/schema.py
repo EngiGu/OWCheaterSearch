@@ -22,7 +22,7 @@ class Cheaters(Base):
 
     status = Column(Integer, nullable=False, server_default=text("0"))
     created = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
-    modified = Column(TIMESTAMP, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+    pub_time = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
 
     def format_name(self):
         return '%s#%s' % (self.name, self.b_id)
@@ -36,7 +36,7 @@ class Urls(Base):
 
     status = Column(Integer, nullable=False, server_default=text("0"))
     created = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
-    modified = Column(TIMESTAMP, nullable=False, server_default=text("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"))
+    pub_time = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
 
 
 online_host = 'ten.sooko.club'

@@ -4,7 +4,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    # image: "imagebed-server"
+    image: "ow-cheater-eye"
     # container_name: "imagebed-server"
     volumes:
       - ./:/app
