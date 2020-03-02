@@ -104,7 +104,7 @@ class CheaterEye:
                     new_urls = self.watch_enter_url(url)
                 # 2. 如果变化进入口网址， 存储信息
                 if self.first_run:
-                    Config.EYE_ENTER_URLS = [Config.EYE_ENTER_URLS] + new_urls
+                    Config.EYE_ENTER_URLS = Config.EYE_ENTER_URLS + new_urls
                     self.first_run = False
             except Exception as e:
                 self.logger.exception(e)
