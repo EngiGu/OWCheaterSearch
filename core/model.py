@@ -1,6 +1,7 @@
 from sqlalchemy import func
 from core.schema import Urls, Cheaters, session_scope
 from core.utils import Utils
+from core.status import UrlStatus
 
 
 class SQLiteModel:
@@ -37,3 +38,12 @@ class SQLiteModel:
                 Cheaters.name == name,
                 Cheaters.b_id == b_id
             ).first()
+
+    def change_one_url_status(self, u_id, status):
+        with session_scope() as s:
+            obj = s.query(Urls).filter(
+                Urls.id == u_id
+            ).first()
+            obj.status = status
+            s.flush()
+

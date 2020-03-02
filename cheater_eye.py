@@ -63,9 +63,7 @@ class CheaterEye:
                 self.logger.info('added %s#%s \t\t pub_time: %s', name, b_id, pub_time)
             
             # 更改状态，不会再次爬取这个网址
-            with session_scope() as s:
-                url_obj.status = UrlStatus.execed
-                s.flush()
+            SQLMODEL.change_one_url_status(url_obj.id, UrlStatus.execed)
 
             pass
         
