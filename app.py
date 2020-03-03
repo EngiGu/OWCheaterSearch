@@ -17,7 +17,7 @@ app = Sanic(__name__)
 SQLITE_MODEL = SQLiteModel()
 
 
-# Thread(target=CheaterEye(logger).start).start()
+Thread(target=CheaterEye(logger).start).start()
 
 
 def msg(code=0, msg='ok!', data=''):
