@@ -4,13 +4,20 @@ import time
 from sanic import Sanic
 from sanic.response import json as sanic_json
 from sanic import response
+from threading import Thread
 
 from config import Config
 from core.model import SQLiteModel
 from core.utils import Utils
+from cheater_eye import CheaterEye
+
 
 app = Sanic(__name__)
 SQLITE_MODEL = SQLiteModel()
+
+
+def start_watch_eye():
+    Thread()
 
 
 def msg(code=0, msg='ok!', data=''):
