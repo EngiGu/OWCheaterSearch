@@ -4,6 +4,7 @@ import time
 from sanic import Sanic
 from sanic.response import json as sanic_json
 from sanic import response
+from sanic.log import logger
 from threading import Thread
 
 from config import Config
@@ -16,13 +17,14 @@ app = Sanic(__name__)
 SQLITE_MODEL = SQLiteModel()
 
 
-def start_watch_eye():
-    Thread()
+# Thread(target=CheaterEye(logger).start).start()
 
 
 def msg(code=0, msg='ok!', data=''):
     return sanic_json({'code': code, 'msg': msg, 'data': data})
 
+
+app.static('/static', './static')
 
 @app.route('/')
 async def handle_request(request):

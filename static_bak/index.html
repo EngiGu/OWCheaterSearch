@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>OW Cheater Search</title>
+	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+</head>
+<script>
+	$(function () {
+		// 加载大概信息
+		$.get('/api/total_status', function (result) {
+			console.log(result);
+			info = '数据总量: ' + result.data.total + '</br>';
+			info = info + '最近一次公布: ' + result.data.last_pub_time  + '</br>';
+			info = info + '最近一次标题: ' + result.data.title;
+			$('#last_info').html(info);
+			get_last_pub_time_cheaters(result.data._last_pub_time)
+		});
+
+		function get_last_pub_time_cheaters(last_pub_time) {
+			$.get('/api/last_pub_time_cheaters/'+ last_pub_time, function (result) {
+			console.log(result);
+					
+		});
+		};
+	})
+</script>
+<body>
+	<div id='main'>
+		<div id='last_info'>
+			
+		</div>
+		<div id='search_box'>
+			<input id='input_box'>
+		</div>
+		
+		<div id='cheaters_show'>
+			
+		</div>
+	</div>	
+</body>
+</html>

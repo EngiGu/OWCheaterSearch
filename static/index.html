@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>OW Cheater Search</title>
-	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-</head>
-<script>
-	$(function () {
-		// 加载大概信息
-		$.get('/api/total_status', function (result) {
-			console.log(result);
-			info = '数据总量: ' + result.data.total + '</br>';
-			info = info + '最近一次公布: ' + result.data.last_pub_time  + '</br>';
-			info = info + '最近一次标题: ' + result.data.title;
-			$('#last_info').html(info);
-			get_last_pub_time_cheaters(result.data._last_pub_time)
-		});
 
-		function get_last_pub_time_cheaters(last_pub_time) {
-			$.get('/api/last_pub_time_cheaters/'+ last_pub_time, function (result) {
-			console.log(result);
-					
-		});
-		};
-	})
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OW Cheater Search</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.19.2/axios.min.js"></script>
+<link rel="stylesheet" type="text/css" href="./static/css/main.css">
+
 <body>
-	<div id='main'>
-		<div id='last_info'>
-			
-		</div>
-		<div id='search_box'>
-			<input id='input_box'>
-		</div>
-		
-		<div id='cheaters_show'>
-			
-		</div>
-	</div>	
+    <!-- <div id="main">
+        <div>
+        </div>
+        <div>
+            <span id="tab_button" @click="clickTab('mail_block')">邮箱配置</span>
+            <span id="tab_button" @click="clickTab('serverchan_block')">Server酱配置</span>
+            <span id="tab_button" @click="clickTab('sec_keys_block')">安全密钥配置</span>
+        </div>
+        <div id="mail_block" v-if="tabIsShow('mail_block')">
+            <div>
+                <h5>内置邮件帐号配置</h5>
+                <input id="input_area" v-model="send_mail_account" placeholder="暂时只支持sina邮箱"></input>
+                <input id="input_area" v-model="send_mail_password"></input>
+                <button @click="updateSendMail()">修改</button>
+                <listpage api_url='/recv/mail' block_title="邮件收件人配置" to_add_palceholder="输入要添加的邮箱"></listpage>
+
+            </div>
+        </div>
+
+        <div id="serverchan_block" v-if="tabIsShow('serverchan_block')">
+            <div>
+                <listpage api_url='/recv/serverchan' block_title="Server酱收件人配置" to_add_palceholder="输入要添加的ServerKey">
+                </listpage>
+            </div>
+        </div>
+
+        <div id="sec_keys_block" v-if="tabIsShow('sec_keys_block')">
+            <div>
+                <listpage api_url='/recv/allowed_sec_keys' block_title="安全密钥配置" to_add_palceholder="输入要添加的密钥前缀(指定请在前面加上:::)">
+                </listpage>
+            </div>
+        </div>
+
+    </div>
+	</div> -->
+	<div id="main">
+		<listpage api="cheaters"></listpage>
+	</div>
+
 </body>
+<script src="./static/js/main.js"></script>
+
 </html>
