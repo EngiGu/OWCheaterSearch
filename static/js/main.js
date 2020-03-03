@@ -38,6 +38,7 @@ Vue.component("listpage", {
             <tr id="listpage_li" v-for="(line, index) in lines" >
                 <td><span>{{ index+1 }}</span></td>
                 <td><span>{{ line.b_name }}</span></td>
+                <td><span>{{ line.reason }}</span></td>
                 <td><span>{{ line._pub_time }}</span></td>
             </tr>
 		</div>
