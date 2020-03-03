@@ -23,7 +23,8 @@ var ROUTER = {
 
 Vue.component("listpage", {
     template: `
-	<div id='main_block'>
+    <div id='main_block'>
+        {{ dy_lines }}
 		<div id='last_info'>
 			全部数据量: {{ total }} </br>
 			上次公布时间: {{ last_pub_time }} </br>
@@ -31,10 +32,14 @@ Vue.component("listpage", {
 		</div>
 		<div id='search_box'>
 			<input id='input_box' v-model="search_value">
-		</div>
-		
+        </div>
+        
 		<div id='cheaters_show'>
-			
+            <tr id="listpage_li" v-for="(line, index) in lines" >
+                <td><span>{{ index+1 }}</span></td>
+                <td><span>{{ line.b_name }}</span></td>
+                <td><span>{{ line._pub_time }}</span></td>
+            </tr>
 		</div>
 	</div>	
     `,
@@ -44,6 +49,8 @@ Vue.component("listpage", {
             "last_pub_time": "",
             "last_pub_title": "",
             "search_value": "",
+            "lines": [],
+
         }
     },
     props: {
@@ -61,6 +68,28 @@ Vue.component("listpage", {
         )).catch(function (err) {
             console.log(err)
         })
+    },
+    methods: {
+        getCheaters(key) {
+            var res = '';
+            axios.get('api/cheaters' + key.trim()).then(response => (
+                console.log(response.data),
+                // this.total = response.data.data.total,
+                // this.last_pub_time = response.data.data.last_pub_time,
+                // this.last_pub_title = response.data.data.title,
+                res =  response.data.data
+            )).catch(function (err) {
+                console.log(err)
+            });
+
+            return  res
+
+            if (key) {
+                Toast('有key')
+            } else {
+                Toast('没有key');
+            }
+        }
     },
     // methods: {
     //     addRecv(to_add) {
@@ -113,14 +142,34 @@ Vue.component("listpage", {
     //         })
     //     }
     // },
-    // computed: {
-    //     _updateView() {
-    //         return this.updateView()
-    //     },
-    //     testButtonShow(){
-    //         return this.api_url.split('/').pop() != 'allowed_sec_keys'
-    //     }
-    // }
+    computed: {
+        // _updateView() {
+        //     return this.updateView()
+        // },
+  
+        dy_lines(){
+            key = this.search_value.trim();
+            console.log('key::::'+key);
+
+            if (!this.search_value) {
+                key = '*'
+            };
+            console.log('key::::'+key);
+
+            axios.get('/api/cheaters/' + key).then(response => (
+            // axios.get('/api/cheaters/' +'66').then(response => (
+                console.log(response.data),
+                // this.total = response.data.data.total,
+                // this.last_pub_time = response.data.data.last_pub_time,
+                // this.last_pub_title = response.data.data.title,
+                this.lines=response.data.data,
+                res =  response.data.data
+                
+            )).catch(function (err) {
+                console.log(err)
+            });
+        }
+    }
 })
 
 

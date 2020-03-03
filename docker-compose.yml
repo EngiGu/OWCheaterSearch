@@ -8,4 +8,6 @@ services:
     # container_name: "imagebed-server"
     volumes:
       - ./:/app
+    ports:
+      - 9901:9901
   

@@ -26,6 +26,7 @@ def msg(code=0, msg='ok!', data=''):
 
 app.static('/static', './static')
 
+
 @app.route('/')
 async def handle_request(request):
     return await response.file('static/index.html')
@@ -37,7 +38,7 @@ async def handle_request(request):
 
 
 @app.route("/api/total_status", methods=['GET'])
-async def upload(request):
+async def total_status(request):
     total, last_pub_time, url_obj = SQLITE_MODEL.get_total_status()
     data = {
         'total': total,
@@ -50,13 +51,18 @@ async def upload(request):
 
 
 @app.route("/api/last_pub_time_cheaters/<stmp:int>", methods=['GET'])
-async def upload(request, stmp):
+async def last_pub_time_cheaters(request, stmp):
     stmp = time.strftime("%Y-%m-%d", time.localtime(stmp))
     cheaters = SQLITE_MODEL.get_last_pub_time_cheaters(stmp)
     data = [Utils.row2dict(i) for i in cheaters]
     return msg(data=data)
 
 
+@app.route("/api/cheaters/<key>", methods=['GET'])
+async def cheaters(request, key):
+    cheaters = SQLITE_MODEL.get_cheaters(str(key))
+    return msg(data=cheaters)
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=Config.API_SERVER_PORT,
-            workers=Config.API_SERVER_WORKERS)
+    app.run(host="0.0.0.0", port=Config.API_SERVER_PORT,  workers=Config.API_SERVER_WORKERS)

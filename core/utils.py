@@ -31,6 +31,11 @@ class Utils:
             else:
                 value = getattr(row, col.name)
             d[col.name] = value
+
+            # 自定义的规则
+            if col.name == 'pub_time':
+                d['_pub_time'] = d['pub_time'].split(' ')[0]
+
         return d
 
 

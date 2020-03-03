@@ -1,4 +1,4 @@
-from sqlalchemy import func
+from sqlalchemy import func, or_
 from core.schema import Urls, Cheaters, session_scope
 from core.utils import Utils
 from core.status import UrlStatus
@@ -72,3 +72,39 @@ class SQLiteModel:
                 Cheaters.pub_time >= '%s 00:00:00' % pub_time,
                 Cheaters.pub_time <= '%s 23:59:59' % pub_time,
             ).limit(100).all()
+
+    def get_cheaters(self, key):
+        with session_scope() as s:
+            chs_urls = s.query(Cheaters, Urls).join(
+                Urls,
+                Urls.id == Cheaters.u_id
+            )
+            if key != '*':
+                chs_urls = chs_urls.filter(
+                    or_(
+                        Cheaters.name.like('%' + key + '%'),
+                        Cheaters.b_id.like('%' + key + '%'),
+                    )
+                )
+            chs_urls = chs_urls.order_by(
+                Cheaters.pub_time.desc()
+            ).limit(50).all()
+
+            return self.format_cheater(chs_urls)
+
+    def format_cheater(self, chs_urls):
+        r = []
+        for ch, url in chs_urls:
+            # print(ch, url)
+            one = Utils.row2dict(ch)
+            one['b_name'] = ch.format_name()
+            one['reason'] = self.format_reason(url.title)
+            r.append(one)
+        return r
+
+    def format_reason(self, title):
+        title = title.replace('《守望先锋》', '')
+        sp_1 = title.split('的')[0]
+        sp2 = sp_1.split('关于')[-1]
+        sp3 = sp2.split('针对')[-1]
+        return sp3

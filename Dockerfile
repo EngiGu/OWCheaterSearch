@@ -17,9 +17,9 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && rm /var/cache/apk/* \
     && apk del .build-deps 
 
-EXPOSE 8000
+EXPOSE 9901
 
 COPY . /app
 WORKDIR /app
 
-CMD ["python", "-u", "cheater_eye.py"]
+CMD ["python", "-u", "app.py"]
