@@ -68,7 +68,12 @@ async def cheaters(request, key):
 @app.route("/api/dns/<domain>", methods=['GET'])
 async def dns(request, domain):
     value = dns_resolver(domain.strip())
-    return msg(data=value)
+    # return msg(data=value)
+    return response.json(
+        {'ip': value},
+        headers={'X-Served-By': 'sanic', 'Access-Control-Allow-Origin': '*'},
+        status=200
+    )
 
 
 if __name__ == "__main__":
