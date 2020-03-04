@@ -11,6 +11,7 @@ from config import Config
 from core.model import SQLiteModel
 from core.utils import Utils
 from cheater_eye import CheaterEye
+from core.dns import dns_resolver
 
 
 app = Sanic(__name__)
@@ -62,6 +63,12 @@ async def last_pub_time_cheaters(request, stmp):
 async def cheaters(request, key):
     cheaters = SQLITE_MODEL.get_cheaters(str(key))
     return msg(data=cheaters)
+
+
+@app.route("/api/dns/<domain>", methods=['GET'])
+async def dns(request, domain):
+    value = dns_resolver(domain.strip())
+    return msg(data=value)
 
 
 if __name__ == "__main__":
