@@ -13,14 +13,18 @@ class SQLiteModel:
                 Urls.url == url
             ).first()
 
-    def add_one_url(self, url, title):
+    def add_one_url(self, url, title, pub_time):
         with session_scope() as s:
             url_obj = self.get_one_url(url)
             if url_obj:
                 return url_obj
 
-            url_obj = Urls(url=url, title=title,
-                           created=Utils.now(return_datetime=False))
+            url_obj = Urls(
+                url=url,
+                title=title,
+                created=Utils.now(return_datetime=False),
+                pub_time=pub_time
+            )
             s.add(url_obj)
             return url_obj
 

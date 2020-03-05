@@ -56,7 +56,7 @@ class CheaterEye:
 
     def deal_detail_names(self, url, title, pub_time, names):
         if names:
-            url_obj = SQLMODEL.add_one_url(url, title)
+            url_obj = SQLMODEL.add_one_url(url, title, pub_time)
             for _name_ in names:
                 name, b_id = _name_.split('#')
                 SQLMODEL.add_one_cheater(name, b_id, url_obj.id, pub_time)
@@ -85,8 +85,11 @@ class CheaterEye:
 
                 url_obj = SQLMODEL.get_one_url(url)
                 if url_obj and url_obj.status == UrlStatus.execed:
-                    self.logger.info('url has crwaled, title: %s', title)
+                    # self.logger.info('url has crwaled, title: %s', title)
+                    pass
                 else:
+                    self.logger.info('new post showed up, title: %s', title)
+
                     detail_page = self.send_request(url)
                     pub_time, names = self.extract_detail_names(detail_page, title)
 
