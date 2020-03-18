@@ -84,16 +84,18 @@ class CheaterEye:
                 return_new_urls.append(url)
 
                 url_obj = SQLMODEL.get_one_url(url)
-                if url_obj and url_obj.status == UrlStatus.execed:
-                    # self.logger.info('url has crwaled, title: %s', title)
-                    pass
-                else:
-                    self.logger.info('new post showed up, title: %s', title)
+                if url_obj:
+                    if url_obj.status == UrlStatus.execed:
+                        # self.logger.info('url has crwaled, title: %s', title)
+                        continue
+                        pass
+                # else:
+#                self.logger.info('new post showed up, title: %s', title)
 
-                    detail_page = self.send_request(url)
-                    pub_time, names = self.extract_detail_names(detail_page, title)
+                detail_page = self.send_request(url)
+                pub_time, names = self.extract_detail_names(detail_page, title)
 
-                    self.deal_detail_names(url, title, pub_time, names)
+                self.deal_detail_names(url, title, pub_time, names)
 
             return return_new_urls
 
