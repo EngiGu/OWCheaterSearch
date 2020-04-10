@@ -39,11 +39,7 @@ class Urls(Base):
     pub_time = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
 
 
-online_host = 'ten.sooko.club'
-if is_online_server(online_host):
-    engine = create_engine(Config.SQLITE_URI.replace(online_host, '127.0.0.1'))
-else:
-    engine = create_engine(Config.SQLITE_URI)
+# engine = create_engine(Config.SQLITE_URI)
 
 engine = create_engine(Config.SQLITE_URI, echo=False)
 session = sessionmaker(bind=engine)
