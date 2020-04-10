@@ -25,7 +25,7 @@ def msg(code=0, msg='ok!', data=''):
     return sanic_json({'code': code, 'msg': msg, 'data': data})
 
 
-app.static('/static', './static')
+app.static('/static', './static/static')
 
 
 @app.route('/')
