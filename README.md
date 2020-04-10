@@ -2,8 +2,10 @@
 
 ![image](https://engigu.coding.net/p/imagestore/d/imagestore/git/raw/back/store/3f766b0c18c63c57a15904db037fc61f.png)
 
-玩游戏最痛恨的就是开g的，自己有时间玩的
+玩游戏最痛恨的就是开g的，自己玩的时候经常遇到，然而守望的封号反馈等于没有，所以写了这个
+
 主要是爬取守望先锋的社区所有封号帖子，并监控新帖子录入
+
 支持搜索，后期可能支持订阅推送
 
 
@@ -15,8 +17,13 @@
 # 运行
 推荐使用`docker-compose`
 1. 先 `cp config.py.sample config.py`，更改`mysql`配置
-2. `docker-compose up --build`
-2. 访问`9901`端口
+2. 第一次运行务必执行
+    ```shell
+    cd core
+    python schema.py
+    ```
+3. `docker-compose up --build`
+4. 访问`9901`端口
 
 # TODO
  - 可能支持订阅
