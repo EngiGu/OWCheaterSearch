@@ -8,13 +8,14 @@
 
 支持搜索，后期可能支持订阅推送
 
+预览地址 [小水管,手下留情](http://ten.sooko.club:9901/#/)
 
-# 环境
+## 环境
  -  python3.7.2
  -  sainc
  -  mysql
 
-# 运行
+## 运行
 推荐使用`docker-compose`
 1. 先 `cp config.py.sample config.py`，更改`mysql`配置
 2. 第一次运行务必执行
@@ -25,6 +26,6 @@
 3. `docker-compose up --build`
 4. 访问`9901`端口
 
-# TODO
+## TODO
  - 可能支持订阅
  - 可能不会再次更新
