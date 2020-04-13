@@ -2,7 +2,8 @@
 
 ![image](https://engigu.coding.net/p/imagestore/d/imagestore/git/raw/back/store/3f766b0c18c63c57a15904db037fc61f.png)
 
-玩游戏最痛恨的就是开g的，自己玩的时候经常遇到，然而守望的封号反馈等于没有，所以写了这个
+
+守望的封号反馈等于没有，所以写了这个
 
 主要是爬取守望先锋的社区所有封号帖子，并监控新帖子录入
 
