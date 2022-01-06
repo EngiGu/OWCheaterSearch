@@ -37,28 +37,3 @@ class Utils:
                 d['_pub_time'] = d['pub_time'].split(' ')[0]
 
         return d
-
-
-import socket
-import requests
-
-
-def SynResolve(host):
-    try:
-        results = socket.getaddrinfo(host, None)
-        for result in results:
-            return result[4][0]
-    except Exception as e:
-        print(e)
-
-
-def is_online_server(host):
-    res = requests.get('http://pv.sohu.com/cityjson?ie=utf-8').content.decode()
-    if SynResolve(host) in res:
-        return True
-    return False
-
-
-if __name__ == '__main__':
-    print(Utils.now())
-    pass

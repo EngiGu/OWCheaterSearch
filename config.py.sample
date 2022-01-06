@@ -1,20 +1,12 @@
-
+import os
 
 
 class Config:
 
+    API_SERVER_WORKERS = os.environ.get('WORKS', 4)
 
-    API_SERVER_WORKERS = 4
-    
-    API_SERVER_PORT = 9901
-    # sqlite 数据库路径
-    SQLITE_URI = 'mysql+pymysql://xxx/ow_cheater'
+    API_SERVER_PORT = os.environ.get('PORT', 9901)
 
-    INTETVER_TIME = 0.1 * 60
+    SQL_URI = 'mysql+pymysql://root:xxxx+****+@cd.xxxx.xxx:3306/ow_cheaters'
 
-    # 入口网址
-    EYE_ENTER_URLS = [
-        'http://bbs.ow.blizzard.cn/forum.php?mod=forumdisplay&fid=38',
-        # 'http://bbs.ow.blizzard.cn/forum.php?mod=viewthread&tid=786840&extra=page%3D1',
-        # 'http://bbs.ow.blizzard.cn/forum.php?mod=viewthread&tid=619963&extra=page%3D1'
-    ]
+    PAGE_LIMIT = os.environ.get('PAGE_LIMIT', 50)
