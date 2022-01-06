@@ -67,7 +67,8 @@ def session_close(func):
         try:
             return func(*args, **kwargs)
         finally:
-            SESSION.close()
+            if SESSION:
+                SESSION.close()
 
     return wrapper
 
