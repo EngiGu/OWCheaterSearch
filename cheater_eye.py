@@ -59,6 +59,7 @@ class CheaterEye:
                     for name in names
                 ]
                 CrawlerModel.insert_into_names(datas)
+                logger.info(f'saved {len(names)} cheaters to db')
                 crawled = True
 
         if crawled:
@@ -77,16 +78,14 @@ class CheaterEye:
     def run(self):
         all_urls = self.get_all_name_urls()
         for url, title in all_urls:
-            print(url, title)
-            url = html.unescape(url)  # 这样就得到了txt = '<abc>'
+            url = html.unescape(url)
             url_obj = CrawlerModel.url_is_crawled(url, title)
             if url_obj.status == UrlStatus.execed:
-                logger.info('url created: %s' % url)
                 continue
             else:
-                print(url, 'hai makedirs')
+                logger.info('url created: %s, title: %s' % (url, title))
                 self.request_page(url_obj)
-                break
+                # break
 
 
 if __name__ == '__main__':

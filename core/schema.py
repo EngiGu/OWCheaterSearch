@@ -40,7 +40,7 @@ class Urls(Base):
     # pub_time = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
 
 
-engine = create_engine(Config.SQL_URI, echo=True)
+engine = create_engine(Config.SQL_URI, echo=False)
 session = sessionmaker(bind=engine)
 SessionType = scoped_session(sessionmaker(bind=engine, expire_on_commit=False))
 
