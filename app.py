@@ -18,10 +18,10 @@ app = Sanic(__name__)
 SQLITE_MODEL = SQLiteModel()
 
 
-Thread(target=CheaterEye(logger).start).start()
+# Thread(target=CheaterEye(logger).start).start()
 
 
-def msg(code=0, msg='ok!', data=''):
+def msg(code=0, msg='ok!', data={}):
     return sanic_json({'code': code, 'msg': msg, 'data': data})
 
 
@@ -63,17 +63,6 @@ async def last_pub_time_cheaters(request, stmp):
 async def cheaters(request, key):
     cheaters = SQLITE_MODEL.get_cheaters(str(key))
     return msg(data=cheaters)
-
-
-@app.route("/api/dns/<domain>", methods=['GET'])
-async def dns(request, domain):
-    value = dns_resolver(domain.strip())
-    # return msg(data=value)
-    return response.json(
-        {'ip': value},
-        headers={'X-Served-By': 'sanic', 'Access-Control-Allow-Origin': '*'},
-        status=200
-    )
 
 
 if __name__ == "__main__":

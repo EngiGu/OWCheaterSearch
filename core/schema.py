@@ -6,19 +6,20 @@ from contextlib import contextmanager
 
 import sys
 import os
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import Config
-from core.utils import is_online_server
 
 Base = declarative_base()
 
 
 class Cheaters(Base):
-    __tablename__ = "ow_cheater"
+    __tablename__ = "ow_cheaters"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(64), server_default=text("''"))
-    b_id = Column(String(64), server_default=text("''"))  # 战网id
-    u_id = Column(Integer, nullable=False)  # url id
+    full_name = Column(String(128), server_default=text("''"), unique=True)
+    name = Column(String(128), server_default=text("''"))
+    blizzard_id = Column(String(64), server_default=text("''"))  # 战网id
+    url_id = Column(Integer, nullable=False)  # url id
 
     status = Column(Integer, nullable=False, server_default=text("0"))
     created = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
@@ -36,15 +37,14 @@ class Urls(Base):
 
     status = Column(Integer, nullable=False, server_default=text("0"))
     created = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
-    pub_time = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
+    # pub_time = Column(TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
 
 
-# engine = create_engine(Config.SQLITE_URI)
-
-engine = create_engine(Config.SQLITE_URI, echo=False)
+engine = create_engine(Config.SQL_URI, echo=True)
 session = sessionmaker(bind=engine)
 SessionType = scoped_session(sessionmaker(bind=engine, expire_on_commit=False))
 
+SESSION = session()
 
 def GetSession():
     return SessionType()
@@ -62,6 +62,14 @@ def session_scope():
     finally:
         session.close()
 
+def session_close(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        finally:
+            SESSION.close()
+
+    return wrapper
 
 # def init_sqlite():
 #     # 谨慎调用，会直接删除已有db文件
