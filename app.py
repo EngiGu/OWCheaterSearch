@@ -5,12 +5,12 @@ from threading import Thread
 from config import Config
 from core.model import QueryModel
 from core.schema import SESSION
-from cheater_eye import CheaterEye
+from cheater_eye import eyes_background
 
 app = Sanic(__name__)
 
 
-# Thread(target=CheaterEye(logger).start).start()
+Thread(target=eyes_background).start()
 
 
 def msg(data, code=0, msg='ok!'):

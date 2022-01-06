@@ -1,8 +1,10 @@
 import datetime
 import re
+import time
 import traceback
 import html
 
+import schedule
 import requests
 from loguru import logger
 from lxml import etree
@@ -87,7 +89,19 @@ class CheaterEye:
                 self.request_page(url_obj)
                 # break
 
+def start_eyes():
+     o = CheaterEye()
+     o.run()
+
+
+def eyes_background():
+    schedule.every().day.at("00:30").do(start_eyes)
+    schedule.every().day.at("12:30").do(start_eyes)
+    logger.info('eyes background started')
+
+    while True:
+        schedule.run_pending()   # 运行所有可以运行的任务
+        time.sleep(1)
 
 if __name__ == '__main__':
-    o = CheaterEye()
-    o.run()
+    start_eyes()
