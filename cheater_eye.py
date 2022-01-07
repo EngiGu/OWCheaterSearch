@@ -14,6 +14,17 @@ from core.status import UrlStatus
 from core.schema import session_close
 from core.utils import Utils
 
+LOGURU_FORMAT = ' '.join(
+    (
+        '<MMC><bold>[</bold></MMC>' + '<level>{level.name:.1s}</level>',
+        '<green>{time:YYMMDD HH:mm:ss.SSS}</green>',
+        '<cyan>{name}.{function}:{line}</cyan>' + '<MMC><bold>]</bold></MMC>',
+        '<level>{message}</level>',
+    )
+)
+LOGURU_FORMAT = LOGURU_FORMAT.replace('MMC', 'magenta')
+logger.add(sys.stderr, colorize=True, format=LOGURU_FORMAT)
+
 
 class CheaterEye:
     def __init__(self):
