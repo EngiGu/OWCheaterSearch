@@ -131,7 +131,10 @@ def start_eyes():
 
 def eyes_background():
     schedule.every().day.at("00:30").do(start_eyes)
+    schedule.every().day.at("08:30").do(start_eyes)
     schedule.every().day.at("12:30").do(start_eyes)
+    schedule.every().day.at("16:30").do(start_eyes)
+    schedule.every().day.at("20:30").do(start_eyes)
     logger.info('eyes background started')
 
     while True:
