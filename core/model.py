@@ -30,18 +30,22 @@ class CrawlerModel:
     @staticmethod
     def insert_into_names(datas):
         # 插入住区的抓取的名字
-        sql = """INSERT INTO `ow_cheaters` (%s) VALUES %s ON DUPLICATE KEY UPDATE %s"""
-        fields = ['full_name', 'name', 'blizzard_id', 'url_id', 'status', 'created', 'pub_time']
-        fields_statement = ', '.join([f'`{f}`' for f in fields])
-        fields_values = ', '.join([f'{f}=VALUES({f})' for f in fields])
-        values = ', '.join([
-            f'({", ".join([CrawlerModel.str(data.get(f, "")) for f in fields])})'
-            for data in datas
-        ])
-        sql = sql % (fields_statement, values, fields_values)
+        x = 1000
+        n_datas = [datas[i:i + x] for i in range(0, len(datas), x)]
 
-        SESSION.execute(sql)
-        SESSION.commit()
+        for n_data in n_datas:
+            sql = """INSERT INTO `ow_cheaters` (%s) VALUES %s ON DUPLICATE KEY UPDATE %s"""
+            fields = ['full_name', 'name', 'blizzard_id', 'url_id', 'status', 'created', 'pub_time']
+            fields_statement = ', '.join([f'`{f}`' for f in fields])
+            fields_values = ', '.join([f'{f}=VALUES({f})' for f in fields])
+            values = ', '.join([
+                f'({", ".join([CrawlerModel.str(data.get(f, "")) for f in fields])})'
+                for data in n_data
+            ])
+            sql = sql % (fields_statement, values, fields_values)
+
+            SESSION.execute(sql)
+            SESSION.commit()
 
     @staticmethod
     def str(s):
