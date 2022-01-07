@@ -1,5 +1,6 @@
 import datetime
 import re
+import sys
 import time
 import traceback
 import html
@@ -23,6 +24,7 @@ LOGURU_FORMAT = ' '.join(
     )
 )
 LOGURU_FORMAT = LOGURU_FORMAT.replace('MMC', 'magenta')
+logger.stop()
 logger.add(sys.stderr, colorize=True, format=LOGURU_FORMAT)
 
 
