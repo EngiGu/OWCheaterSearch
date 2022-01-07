@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, VARCHAR, DATETIME, func, or_, and_, dist
 from config import Config
 
 Base = declarative_base()
-engine = create_engine(Config.SQL_URI, echo=False)
+engine = create_engine(Config.SQL_URI, echo=False, pool_recycle=1800)
 session = sessionmaker(bind=engine)
 SESSION = session()
 
