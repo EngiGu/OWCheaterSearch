@@ -32,7 +32,7 @@ class CheaterEye:
             return requests.Response()
 
     def get_all_name_urls(self):
-        all = []
+        all_urls = []
         # start_page_urls = self._get_url(self.start_url)
         # all.extend(start_page_urls)
         # for page_url, _ in start_page_urls:
@@ -43,21 +43,21 @@ class CheaterEye:
         # raise
         # return all
 
-        self.get_all_name_urls_by_depth(2, self.start_url, all)
-        print(all)
+        self.get_all_name_urls_by_depth(2, self.start_url, all_urls)
+        print(all_urls)
 
-        return all
+        return all_urls
 
-    def get_all_name_urls_by_depth(self, depth, url, all):
+    def get_all_name_urls_by_depth(self, depth, url, all_urls):
         if depth <= 0:
             return
 
         page_urls = self._get_url(url)
-        all.append(page_urls)
+        all_urls.append(page_urls)
         depth -= 1
 
         for page_url, _ in start_page_urls:
-            self.get_all_name_urls_by_depth(depth, page_url, all)
+            self.get_all_name_urls_by_depth(depth, page_url, all_urls)
 
     def _get_url(self, url):
         html = self.request(**{'url': url}).content.decode()
