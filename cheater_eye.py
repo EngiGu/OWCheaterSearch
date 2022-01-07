@@ -33,19 +33,7 @@ class CheaterEye:
 
     def get_all_name_urls(self):
         all_urls = []
-        # start_page_urls = self._get_url(self.start_url)
-        # all.extend(start_page_urls)
-        # for page_url, _ in start_page_urls:
-        #     all.extend(self._get_url(page_url))
-        # all = [(self.start_url, 'index')]
-        #
-        # print(all)
-        # raise
-        # return all
-
         self.get_all_name_urls_by_depth(2, self.start_url, all_urls)
-        print(all_urls)
-
         return all_urls
 
     def get_all_name_urls_by_depth(self, depth, url, all_urls):
@@ -53,17 +41,21 @@ class CheaterEye:
             return
 
         page_urls = self._get_url(url)
-        all_urls.append(page_urls)
+
+        all_urls.extend(page_urls)
         depth -= 1
 
-        for page_url, _ in start_page_urls:
+        for page_url, _ in page_urls:
             self.get_all_name_urls_by_depth(depth, page_url, all_urls)
 
     def _get_url(self, url):
-        html = self.request(**{'url': url}).content.decode()
+        ps = self.request(**{'url': url}).content.decode()
         result = re.findall(r'<a href="(.*?)" .*?>(.*?)</a>', ps, re.S)
         r = []
         for url, title in result:
+            url = html.unescape(url)
+            if 'bbs.ow.blizzard.cn' not in url:
+                url = 'http://bbs.ow.blizzard.cn/%s' % url
             if '处罚' in title:
                 r.append((url, title))
         return r
