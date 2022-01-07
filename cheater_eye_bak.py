@@ -17,7 +17,7 @@ from core.utils import Utils
 
 class CheaterEye:
     def __init__(self):
-        self.start_url = 'http://bbs.ow.blizzard.cn/forum.php?mod=forumdisplay&fid=38'
+        self.start_url = 'http://bbs.ow.blizzard.cn/forum.php?mod=viewthread&tid=619963&extra=page%3D1'
 
     def request(self, method='get', **kwargs):
         if 'timeout' not in kwargs:
@@ -32,33 +32,10 @@ class CheaterEye:
             return requests.Response()
 
     def get_all_name_urls(self):
-        all = []
-        start_page_urls = self._get_url(self.start_url)
-        all.extend(start_page_urls)
-        for page_url, _ in start_page_urls:
-            all.extend(self._get_url(page_url))
-
-        print(all)
-        raise
-        return all
-
-    # def get_all_name_urls_by_depth(self, depth, url):
-    #     all = [(self.start_url, 'index')]
-    #     if depth <= 0:
-    #         return []
-    #
-    #     self._get_url(url)
-    #
-    #     depth -= 1
-
-    def _get_url(self, url):
-        html = self.request(**{'url': url}).content.decode()
-        result = re.findall(r'<a href="(.*?)" .*?>(.*?)</a>', ps, re.S)
-        r = []
-        for url, title in result:
-            if '处罚' in title:
-                r.append((url, title))
-        return r
+        html = self.request(**{'url': self.start_url}).content.decode()
+        matched = re.findall(r'<li><a href="(.*?bbs.ow.blizzard.cn/forum.php.*?)" target="_blank">(.*?)</a></li>', html)
+        logger.info(f'get {len(matched)} urls from start url')
+        return matched
 
     def request_page(self, url_obj):
         html_text = self.request(**{'url': url_obj.url}).content.decode()
@@ -112,10 +89,9 @@ class CheaterEye:
                 self.request_page(url_obj)
                 # break
 
-
 def start_eyes():
-    o = CheaterEye()
-    o.run()
+     o = CheaterEye()
+     o.run()
 
 
 def eyes_background():
@@ -124,9 +100,8 @@ def eyes_background():
     logger.info('eyes background started')
 
     while True:
-        schedule.run_pending()  # 运行所有可以运行的任务
+        schedule.run_pending()   # 运行所有可以运行的任务
         time.sleep(1)
-
 
 if __name__ == '__main__':
     start_eyes()
