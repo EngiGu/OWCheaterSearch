@@ -101,6 +101,7 @@ class CheaterEye:
                 crawled = True
 
         if crawled:
+            logger.info('url created: %s, title: %s' % (url_obj.url, url_obj.title))
             CrawlerModel.change_url_status(url_obj.id, UrlStatus.execed)
 
     def _format_pub_time(self, pub_time):
@@ -121,7 +122,6 @@ class CheaterEye:
             if url_obj.status == UrlStatus.execed:
                 continue
             else:
-                logger.info('url created: %s, title: %s' % (url, title))
                 self.request_page(url_obj)
                 # break
 
